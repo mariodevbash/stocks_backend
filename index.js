@@ -2,9 +2,17 @@ const express = require('express')
 require('dotenv').config()
 const { dbConnection } = require('./src/configs/db.config')
 
+//Crear el servidor de express
 const app = express()
 
+//Conexión a la base de datos
 dbConnection()
+
+//Lectura y parseo del body
+app.use(express.json())
+
+//Rutas
+app.use('/api/stocks', require('./src/routes/stocks'))
 
 if (require.main === module) {
   app.listen(process.env.PORT, () =>
