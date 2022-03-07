@@ -50,7 +50,7 @@ https://cotizador.altatecdev.com/
 ---
 
 ## Licensing
-Altatec Software
+Altatec Software™
 
   
 
