@@ -13,6 +13,7 @@ app.use(express.json())
 
 //Rutas
 app.use('/api/stocks', require('./src/routes/stocks'))
+app.use('/api/suppliers', require('./src/routes/suppliers'))
 
 if (require.main === module) {
   app.listen(process.env.PORT, () =>

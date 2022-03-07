@@ -1,8 +1,8 @@
 const { Router } = require('express')
 const router = Router()
 
-router.get('/prueba', (req, res) => {
-  res.json(201)
-})
+const { getStockBySku } = require('../controllers/stocks')
+
+router.get('/:sku', getStockBySku)
 
 module.exports = router
