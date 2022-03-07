@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package stock;
+
+service GetStock {
+    rpc GetStock(ProductId) returns(StockData) {}
+}
+
+message ProductId{
+    string sku = 1;
+}
+
+message StockData{
+    string sku = 1;
+    int32 stock = 2;
+}
