@@ -1,14 +1,14 @@
 const { response } = require('express')
 const Supplier = require('../models/Supplier')
+const Log = require('../models/Log')
 
+// Traer información (name, url y token) de un proveedor en base a su _id de mongoDB
+// Route: /api/suppliers/:id (GET)
 const getSupplierById = async (req, res = response) => {
   const supplierId = req.params.id
 
   try {
-    const supplier = await Supplier.findOne(
-      { id_main_db: supplierId },
-      'id_main_db url token'
-    )
+    const supplier = await Supplier.findById(supplierId, 'name url token')
 
     if (!supplier) {
       return res.status(404).json({
@@ -22,14 +22,15 @@ const getSupplierById = async (req, res = response) => {
       data: supplier,
     })
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({
-      ok: false,
-      msg: 'Server Internal Error',
-    })
+    const log = new Log({ message: error, response_code: 500 })
+    log.save()
+
+    return res.status(500).json({ ok: false, msg: error })
   }
 }
 
+// Guardar un nuevo proveedor con los datos recibidos (name, url, token)
+// Route: /api/suppliers (POST)
 const createSupplier = async (req, res = response) => {
   const supplier = new Supplier(req.body)
 
@@ -41,19 +42,20 @@ const createSupplier = async (req, res = response) => {
       data: savedSupplier,
     })
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({
-      ok: false,
-      msg: 'Server Internal Error',
-    })
+    const log = new Log({ message: error, response_code: 500 })
+    log.save()
+
+    return res.status(500).json({ ok: false, msg: error })
   }
 }
 
+// Actualizar la información de un proveedor con los nuevos datos recibidos (name, url, token) en base a su _id de mongoDB
+// Route: /api/suppliers/:id (PUT)
 const updateSupplier = async (req, res = response) => {
   const supplierId = req.params.id
 
   try {
-    const supplier = await Supplier.findOne({ id_main_db: supplierId })
+    const supplier = await Supplier.findById(supplierId)
 
     if (!supplier) {
       return res.status(404).json({
@@ -66,8 +68,8 @@ const updateSupplier = async (req, res = response) => {
       ...req.body,
     }
 
-    const updatedSupplier = await Supplier.findOneAndUpdate(
-      { id_main_db: supplierId },
+    const updatedSupplier = await Supplier.findByIdAndUpdate(
+      supplierId,
       newSupplier,
       { new: true }
     )
@@ -77,19 +79,20 @@ const updateSupplier = async (req, res = response) => {
       data: updatedSupplier,
     })
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({
-      ok: false,
-      msg: 'Server Internal Error',
-    })
+    const log = new Log({ message: error, response_code: 500 })
+    log.save()
+
+    return res.status(500).json({ ok: false, msg: error })
   }
 }
 
+// Eliminar un proveedor en base a su _id de mongoDB
+// Route: /api/suppliers/:id (DELETE)
 const deleteSupplier = async (req, res = response) => {
   const supplierId = req.params.id
 
   try {
-    const supplier = await Supplier.findOne({ id_main_db: supplierId })
+    const supplier = await Supplier.findById(supplierId)
 
     if (!supplier) {
       return res.status(404).json({
@@ -98,18 +101,17 @@ const deleteSupplier = async (req, res = response) => {
       })
     }
 
-    const { id } = await Supplier.findOneAndDelete({ id_main_db: supplierId })
+    const { id } = await Supplier.findByIdAndDelete(supplierId)
 
     return res.status(200).json({
       ok: true,
       id,
     })
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({
-      ok: false,
-      msg: 'Server Internal Error',
-    })
+    const log = new Log({ message: error, response_code: 500 })
+    log.save()
+
+    return res.status(500).json({ ok: false, msg: error })
   }
 }
 

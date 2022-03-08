@@ -1,20 +1,22 @@
+// Modelo para la coleccion de Logs
+
 const { Schema, model } = require('mongoose')
 
-const schemaOptions = {
-  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-}
-
-const LogSchema = Schema({
-  message: {
-    type: String,
-    required: true,
+const LogSchema = Schema(
+  {
+    message: {
+      type: String,
+      required: true,
+    },
+    response_code: {
+      type: Number,
+      required: true,
+    },
   },
-  response_code: {
-    type: Number,
-    required: true,
-  },
-
-  schemaOptions,
-})
+  {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+    versionKey: false,
+  }
+)
 
 module.exports = model('Log', LogSchema)

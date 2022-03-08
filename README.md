@@ -1,11 +1,12 @@
 # Stocks Altatec - Microservice
 
-## About.
+## About
 This microservice is responsible for providing the number of products in stock in a warehouse, it can also create, edit, delete and update suppliers and their access routes to their warehouse APIs.
 
 ## Technologies
 - Nodejs
 - Express
+- Express Validator
 - MongoDB
 - Mongoose
 - Eslint
@@ -17,6 +18,7 @@ This microservice is responsible for providing the number of products in stock i
 - [ ] TDD (Test Driven Development)
 - [x] Persistence MongoDB Database
 - [ ] Global Auth Token
+- [x] Suppliers
 - [ ] Logs
 - [ ] Docker
 

@@ -1,11 +1,12 @@
+// Modelo para la coleccion de Proveedores
+
 const { Schema, model } = require('mongoose')
 
 const SupplierSchema = new Schema(
   {
-    id_main_db: {
-      type: Number,
+    name: {
+      type: String,
       required: true,
-      unique: true,
     },
     url: {
       type: String,
@@ -14,7 +15,6 @@ const SupplierSchema = new Schema(
     token: {
       type: String,
       required: true,
-      unique: true,
     },
   },
   {

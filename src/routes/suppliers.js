@@ -2,18 +2,28 @@ const { Router } = require('express')
 const router = Router()
 
 const {
+  validateGetSupplier,
+  validateCreateSupplier,
+  validateUpdateSupplier,
+  validateDeleteSupplier,
+} = require('../validators/suppliers')
+
+const {
   getSupplierById,
   createSupplier,
   updateSupplier,
   deleteSupplier,
 } = require('../controllers/suppliers')
 
-router.get('/:id', getSupplierById)
+// Rutas pertenecientes a "/api/suppliers"
+// El flujo pasa primero por la validación y despues se va al controlador
 
-router.post('/', createSupplier)
+router.get('/:id', validateGetSupplier, getSupplierById)
 
-router.put('/:id', updateSupplier)
+router.post('/', validateCreateSupplier, createSupplier)
 
-router.delete('/:id', deleteSupplier)
+router.put('/:id', validateUpdateSupplier, updateSupplier)
+
+router.delete('/:id', validateDeleteSupplier, deleteSupplier)
 
 module.exports = router
