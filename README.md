@@ -19,7 +19,7 @@ This microservice is responsible for providing the number of products in stock i
 - [x] Persistence MongoDB Database
 - [ ] Global Auth Token
 - [x] Suppliers
-- [ ] Logs
+- [x] Logs
 - [ ] Docker
 
 ## Project Setup
